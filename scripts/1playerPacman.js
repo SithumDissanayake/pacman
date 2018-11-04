@@ -16,12 +16,12 @@ pacman = {
 	y: 13,
 }
 ghostShadow = {
-	x: 12,
+	x: 11,
 	y: 6,
 }
 ghostSpeedy = {
 	x: 10,
-	y: 13,
+	y: 8,
 }
 ghostBashful = {
 	x: 11,
@@ -40,9 +40,9 @@ map = [
 	[3,3,3,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,3,3,3],
 	[3,3,3,1,2,1,1,2,1,2,1,1,1,2,1,2,1,1,2,1,3,3,3],
 	[3,3,3,1,2,2,2,2,3,3,3,9,3,3,3,2,2,2,2,1,3,3,3],
-	[3,3,3,1,1,1,2,1,3,1,1,13,1,1,3,1,2,1,1,1,3,3,3],
-	[7,7,7,7,3,3,2,1,3,1,11,10,12,1,3,1,2,3,3,8,8,8,8],
-	[3,3,3,1,1,1,2,1,3,1,1,1,1,1,3,1,2,1,1,1,3,3,3],
+	[3,3,3,1,1,1,2,1,3,1,1,3,1,1,3,1,2,1,1,1,3,3,3],
+	[7,7,7,7,3,3,2,1,3,3,11,10,12,3,3,1,2,3,3,8,8,8,8],
+	[3,3,3,1,1,1,2,1,3,1,1,3,1,1,3,1,2,1,1,1,3,3,3],
 	[3,3,3,1,2,2,2,2,3,3,3,3,3,3,3,2,2,2,2,1,3,3,3],
 	[3,3,3,1,2,1,1,1,1,2,1,1,1,2,1,1,1,1,2,1,3,3,3],
 	[3,3,3,1,4,2,2,1,1,2,1,1,1,2,1,1,2,2,4,1,3,3,3],
@@ -130,39 +130,129 @@ function gameOver(){
 
 
 document.onkeydown = function(event){
+	var ghostShadowMovement = Math.floor((Math.random() * 4) + 1);
+	var ghostSpeedyMovement = Math.floor((Math.random() * 4) + 1);
+	var ghostBashfulMovement = Math.floor((Math.random() * 4) + 1);
+	var ghostPokeyMovement = Math.floor((Math.random() * 4) + 1);
+
+	if(ghostShadowMovement == 1 ){
+		if(map[ghostShadow.y][ghostShadow.x-1] !== 1 && map[ghostShadow.y][ghostShadow.x-1] !== 10 && map[ghostShadow.y][ghostShadow.x-1] !== 11 && map[ghostShadow.y][ghostShadow.x-1] !== 12 && map[ghostShadow.y][ghostShadow.x-1] !== 13){
+			map[ghostShadow.y][ghostShadow.x] = 2;
+			ghostShadow.x = ghostShadow.x - 1;
+			map[ghostShadow.y][ghostShadow.x] = 9;
+		}
+	}
+	else if(ghostSpeedyMovement == 1 ){
+		if(map[ghostSpeedy.y][ghostSpeedy.x-1] !== 1 && map[ghostSpeedy.y][ghostSpeedy.x-1] !== 10 && map[ghostSpeedy.y][ghostSpeedy.x-1] !== 11 && map[ghostSpeedy.y][ghostSpeedy.x-1] !== 12 && map[ghostSpeedy.y][ghostSpeedy.x-1] !== 13){
+			map[ghostSpeedy.y][ghostSpeedy.x] = 2;
+			ghostSpeedy.x = ghostSpeedy.x - 1;
+			map[ghostSpeedy.y][ghostSpeedy.x] = 10;
+		}
+	}
+	else if(ghostBashfulMovement == 1 ){
+		if(map[ghostBashful.y][ghostBashful.x-1] !== 1 && map[ghostBashful.y][ghostBashful.x-1] !== 10 && map[ghostBashful.y][ghostBashful.x-1] !== 11 && map[ghostBashful.y][ghostBashful.x-1] !== 12 && map[ghostBashful.y][ghostBashful.x-1] !== 13){
+			map[ghostBashful.y][ghostBashful.x] = 2;
+			ghostBashful.x = ghostBashful.x - 1;
+			map[ghostBashful.y][ghostBashful.x] = 11;
+		}
+	}
+	else if(ghostPokeyMovement == 1 ){
+		if(map[ghostPokey.y][ghostPokey.x-1] !== 1 && map[ghostPokey.y][ghostPokey.x-1] !== 10 && map[ghostPokey.y][ghostPokey.x-1] !== 11 && map[ghostPokey.y][ghostPokey.x-1] !== 12 && map[ghostPokey.y][ghostPokey.x-1] !== 13){
+		  map[ghostPokey.y][ghostPokey.x] = 2;
+		  ghostPokey.x = ghostPokey.x - 1;
+		  map[ghostPokey.y][ghostPokey.x] = 12;
+		}
+	}
+
+	if(ghostShadowMovement == 2 ){
+		if(map[ghostShadow.y-1][ghostShadow.x] !== 1 && map[ghostShadow.y-1][ghostShadow.x] !== 10 && map[ghostShadow.y-1][ghostShadow.x] !== 11 && map[ghostShadow.y-1][ghostShadow.x] !== 12 && map[ghostShadow.y-1][ghostShadow.x] !== 13){
+			map[ghostShadow.y][ghostShadow.x] = 2;
+			ghostShadow.y = ghostShadow.y - 1;
+			map[ghostShadow.y][ghostShadow.x] = 9;
+		}
+	}
+	else if(ghostSpeedyMovement == 2 ){
+		if(map[ghostSpeedy.y-1][ghostSpeedy.x] !== 1 && map[ghostSpeedy.y-1][ghostSpeedy.x] !== 10 && map[ghostSpeedy.y-1][ghostSpeedy.x] !== 11 && map[ghostSpeedy.y-1][ghostSpeedy.x] !== 12 && map[ghostSpeedy.y-1][ghostSpeedy.x] !== 13){
+		  map[ghostSpeedy.y][ghostSpeedy.x] = 2;
+		  ghostSpeedy.y = ghostSpeedy.y - 1;
+		  map[ghostSpeedy.y][ghostSpeedy.x] = 10;
+		}
+	}
+	else if(ghostBashfulMovement == 2 ){
+		if(map[ghostBashful.y-1][ghostBashful.x] !== 1 && map[ghostBashful.y-1][ghostBashful.x] !== 10 && map[ghostBashful.y-1][ghostBashful.x] !== 11 && map[ghostBashful.y-1][ghostBashful.x] !== 12 && map[ghostBashful.y-1][ghostBashful.x] !== 13){
+		  map[ghostBashful.y][ghostBashful.x] = 2;
+		  ghostBashful.y = ghostBashful.y - 1;
+		  map[ghostBashful.y][ghostBashful.x] = 11;
+		}
+	}
+	else if(ghostPokeyMovement == 2 ){
+		if(map[ghostPokey.y-1][ghostPokey.x] !== 1 && map[ghostPokey.y-1][ghostPokey.x] !== 10 && map[ghostPokey.y-1][ghostPokey.x] !== 11 && map[ghostPokey.y-1][ghostPokey.x] !== 12 && map[ghostPokey.y-1][ghostPokey.x] !== 13){
+		  map[ghostPokey.y][ghostPokey.x] = 2;
+		  ghostPokey.y = ghostPokey.y - 1;
+		  map[ghostPokey.y][ghostPokey.x] = 12;
+		}
+	}
+
+	if(ghostShadowMovement == 3 ){
+		if(map[ghostShadow.y][ghostShadow.x+1] !== 1 && map[ghostShadow.y][ghostShadow.x+1] !== 10 && map[ghostShadow.y][ghostShadow.x+1] !== 11 && map[ghostShadow.y][ghostShadow.x+1] !== 12 && map[ghostShadow.y][ghostShadow.x+1] !== 13){
+			map[ghostShadow.y][ghostShadow.x] = 2;
+			ghostShadow.x = ghostShadow.x + 1;
+			map[ghostShadow.y][ghostShadow.x] = 9;
+		}
+	}
+	else if(ghostSpeedyMovement == 3 ){
+		if(map[ghostSpeedy.y][ghostSpeedy.x+1] !== 1 && map[ghostSpeedy.y][ghostSpeedy.x+1] !== 10 && map[ghostSpeedy.y][ghostSpeedy.x+1] !== 11 && map[ghostSpeedy.y][ghostSpeedy.x+1] !== 12 && map[ghostSpeedy.y][ghostSpeedy.x+1] !== 13){
+		  map[ghostSpeedy.y][ghostSpeedy.x] = 2;
+		  ghostSpeedy.x = ghostSpeedy.x + 1;
+		  map[ghostSpeedy.y][ghostSpeedy.x] = 10;
+		}
+	}
+	else if(ghostBashfulMovement == 3 ){
+		if(map[ghostBashful.y][ghostBashful.x+1] !== 1 && map[ghostBashful.y][ghostBashful.x+1] !== 10 && map[ghostBashful.y][ghostBashful.x+1] !== 11 && map[ghostBashful.y][ghostBashful.x+1] !== 12 && map[ghostBashful.y][ghostBashful.x+1] !== 13){
+		  map[ghostBashful.y][ghostBashful.x] = 2;
+		  ghostBashful.x = ghostBashful.x + 1;
+		  map[ghostBashful.y][ghostBashful.x] = 11;
+		}
+	}
+	else if(ghostPokeyMovement == 3 ){
+		if(map[ghostPokey.y][ghostPokey.x+1] !== 1 && map[ghostPokey.y][ghostPokey.x+1] !== 10 && map[ghostPokey.y][ghostPokey.x+1] !== 11 && map[ghostPokey.y][ghostPokey.x+1] !== 12 && map[ghostPokey.y][ghostPokey.x+1] !== 13){
+		  map[ghostPokey.y][ghostPokey.x] = 2;
+		  ghostPokey.x = ghostPokey.x + 1;
+		  map[ghostPokey.y][ghostPokey.x] = 12;
+		}
+	}
+
+	if(ghostShadowMovement == 4 ){
+		if(map[ghostShadow.y+1][ghostShadow.x] !== 1 && map[ghostShadow.y+1][ghostShadow.x] !== 10 && map[ghostShadow.y+1][ghostShadow.x] !== 11 && map[ghostShadow.y+1][ghostShadow.x] !== 12 && map[ghostShadow.y+1][ghostShadow.x] !== 13){
+			map[ghostShadow.y][ghostShadow.x] = 2;
+			ghostShadow.y = ghostShadow.y + 1;
+			map[ghostShadow.y][ghostShadow.x] = 9;
+		}
+	}
+	else if(ghostSpeedyMovement == 4 ){
+		if(map[ghostSpeedy.y+1][ghostSpeedy.x] !== 1 && map[ghostSpeedy.y+1][ghostSpeedy.x] !== 10 && map[ghostSpeedy.y+1][ghostSpeedy.x] !== 11 && map[ghostSpeedy.y+1][ghostSpeedy.x] !== 12 && map[ghostSpeedy.y+1][ghostSpeedy.x] !== 13){
+		  map[ghostSpeedy.y][ghostSpeedy.x] = 2;
+		  ghostSpeedy.y = ghostSpeedy.y + 1;
+		  map[ghostSpeedy.y][ghostSpeedy.x] = 10;
+		}
+	}
+	else if(ghostBashfulMovement == 4 ){
+		if(map[ghostBashful.y+1][ghostBashful.x] !== 1 && map[ghostBashful.y+1][ghostBashful.x] !== 10 && map[ghostBashful.y+1][ghostBashful.x] !== 11 && map[ghostBashful.y+1][ghostBashful.x] !== 12 && map[ghostBashful.y+1][ghostBashful.x] !== 13){
+		  map[ghostBashful.y][ghostBashful.x] = 2;
+		  ghostBashful.y = ghostBashful.y + 1;
+		  map[ghostBashful.y][ghostBashful.x] = 11;
+		}
+	}
+	else if(ghostPokeyMovement == 4 ){
+		if(map[ghostPokey.y+1][ghostPokey.x] !== 1 && map[ghostPokey.y+1][ghostPokey.x] !== 10 && map[ghostPokey.y+1][ghostPokey.x] !== 11 && map[ghostPokey.y+1][ghostPokey.x] !== 12 && map[ghostPokey.y+1][ghostPokey.x] !== 13){
+		  map[ghostPokey.y][ghostPokey.x] = 2;
+		  ghostPokey.y = ghostPokey.y + 1;
+		  map[ghostPokey.y][ghostPokey.x] = 12;
+		}
+	}
+
 	// PACMAN MOVE LEFT
 	if (event.keyCode === 37 || event.keyCode === 65){
-			var ghostMovement = Math.floor((Math.random() * 4) + 1);
-
-			if (ghostMovement == 1){
-				if(map[ghostShadow.y][ghostShadow.x-1] !== 1 && map[ghostShadow.y][ghostShadow.x-1] !== 10 && map[ghostShadow.y][ghostShadow.x-1] !== 11 && map[ghostShadow.y][ghostShadow.x-1] !== 12 && map[ghostShadow.y][ghostShadow.x-1] !== 13){
-					map[ghostShadow.y][ghostShadow.x] = 2;
-					ghostShadow.x = ghostShadow.x - 1;
-					map[ghostShadow.y][ghostShadow.x] = 9;
-				}
-			}
-			else if (ghostMovement == 2){
-				if(map[ghostShadow.y-1][ghostShadow.x] !== 1 && map[ghostShadow.y-1][ghostShadow.x] !== 10 && map[ghostShadow.y-1][ghostShadow.x] !== 11 && map[ghostShadow.y-1][ghostShadow.x] !== 12 && map[ghostShadow.y-1][ghostShadow.x] !== 13){
-					map[ghostShadow.y][ghostShadow.x] = 2;
-					ghostShadow.y = ghostShadow.y - 1;
-					map[ghostShadow.y][ghostShadow.x] = 9;
-				}
-			}
-			else if (ghostMovement == 3){
-				if(map[ghostShadow.y][ghostShadow.x+1] !== 1 && map[ghostShadow.y][ghostShadow.x+1] !== 10 && map[ghostShadow.y][ghostShadow.x+1] !== 11 && map[ghostShadow.y][ghostShadow.x+1] !== 12 && map[ghostShadow.y][ghostShadow.x+1] !== 13){
-					map[ghostShadow.y][ghostShadow.x] = 2;
-					ghostShadow.x = ghostShadow.x + 1;
-					map[ghostShadow.y][ghostShadow.x] = 9;
-				}
-			}
-			else if (ghostMovement == 4){
-				if(map[ghostShadow.y+1][ghostShadow.x] !== 1 && map[ghostShadow.y+1][ghostShadow.x] !== 10 && map[ghostShadow.y+1][ghostShadow.x] !== 11 && map[ghostShadow.y+1][ghostShadow.x] !== 12 && map[ghostShadow.y+1][ghostShadow.x] !== 13){
-					map[ghostShadow.y][ghostShadow.x] = 2;
-					ghostShadow.y = ghostShadow.y + 1;
-					map[ghostShadow.y][ghostShadow.x] = 9;
-				}
-			}
-
 		if (map[pacman.y][pacman.x-1] !== 1){
 			map[pacman.y][pacman.x] = 3;
 			pacman.x = pacman.x - 1;
@@ -194,37 +284,6 @@ document.onkeydown = function(event){
 
 	// PACMAN MOVE UP
 	else if (event.keyCode === 38 || event.keyCode === 87){
-		var ghostMovement = Math.floor((Math.random() * 4) + 1);
-
-		if (ghostMovement == 1){
-			if(map[ghostShadow.y][ghostShadow.x-1] !== 1 && map[ghostShadow.y][ghostShadow.x-1] !== 10 && map[ghostShadow.y][ghostShadow.x-1] !== 11 && map[ghostShadow.y][ghostShadow.x-1] !== 12 && map[ghostShadow.y][ghostShadow.x-1] !== 13){
-				map[ghostShadow.y][ghostShadow.x] = 2;
-				ghostShadow.x = ghostShadow.x - 1;
-				map[ghostShadow.y][ghostShadow.x] = 9;
-			}
-		}
-		else if (ghostMovement == 2){
-			if(map[ghostShadow.y-1][ghostShadow.x] !== 1 && map[ghostShadow.y-1][ghostShadow.x] !== 10 && map[ghostShadow.y-1][ghostShadow.x] !== 11 && map[ghostShadow.y-1][ghostShadow.x] !== 12 && map[ghostShadow.y-1][ghostShadow.x] !== 13){
-				map[ghostShadow.y][ghostShadow.x] = 2;
-				ghostShadow.y = ghostShadow.y - 1;
-				map[ghostShadow.y][ghostShadow.x] = 9;
-			}
-		}
-		else if (ghostMovement == 3){
-			if(map[ghostShadow.y][ghostShadow.x+1] !== 1 && map[ghostShadow.y][ghostShadow.x+1] !== 10 && map[ghostShadow.y][ghostShadow.x+1] !== 11 && map[ghostShadow.y][ghostShadow.x+1] !== 12 && map[ghostShadow.y][ghostShadow.x+1] !== 13){
-				map[ghostShadow.y][ghostShadow.x] = 2;
-				ghostShadow.x = ghostShadow.x + 1;
-				map[ghostShadow.y][ghostShadow.x] = 9;
-			}
-		}
-		else if (ghostMovement == 4){
-			if(map[ghostShadow.y+1][ghostShadow.x] !== 1 && map[ghostShadow.y+1][ghostShadow.x] !== 10 && map[ghostShadow.y+1][ghostShadow.x] !== 11 && map[ghostShadow.y+1][ghostShadow.x] !== 12 && map[ghostShadow.y+1][ghostShadow.x] !== 13){
-				map[ghostShadow.y][ghostShadow.x] = 2;
-				ghostShadow.y = ghostShadow.y + 1;
-				map[ghostShadow.y][ghostShadow.x] = 9;
-			}
-		}
-
 		if (map[pacman.y-1][pacman.x] !== 1){
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y - 1;
@@ -253,36 +312,6 @@ document.onkeydown = function(event){
 
 	// PACMAN MOVE RIGHT
 	else if (event.keyCode === 39 || event.keyCode === 68){
-		var ghostMovement = Math.floor((Math.random() * 4) + 1);
-
-		if (ghostMovement == 1){
-			if(map[ghostShadow.y][ghostShadow.x-1] !== 1 && map[ghostShadow.y][ghostShadow.x-1] !== 10 && map[ghostShadow.y][ghostShadow.x-1] !== 11 && map[ghostShadow.y][ghostShadow.x-1] !== 12 && map[ghostShadow.y][ghostShadow.x-1] !== 13){
-				map[ghostShadow.y][ghostShadow.x] = 2;
-				ghostShadow.x = ghostShadow.x - 1;
-				map[ghostShadow.y][ghostShadow.x] = 9;
-			}
-		}
-		else if (ghostMovement == 2){
-			if(map[ghostShadow.y-1][ghostShadow.x] !== 1 && map[ghostShadow.y-1][ghostShadow.x] !== 10 && map[ghostShadow.y-1][ghostShadow.x] !== 11 && map[ghostShadow.y-1][ghostShadow.x] !== 12 && map[ghostShadow.y-1][ghostShadow.x] !== 13){
-				map[ghostShadow.y][ghostShadow.x] = 2;
-				ghostShadow.y = ghostShadow.y - 1;
-				map[ghostShadow.y][ghostShadow.x] = 9;
-			}
-		}
-		else if (ghostMovement == 3){
-			if(map[ghostShadow.y][ghostShadow.x+1] !== 1 && map[ghostShadow.y][ghostShadow.x+1] !== 10 && map[ghostShadow.y][ghostShadow.x+1] !== 11 && map[ghostShadow.y][ghostShadow.x+1] !== 12 && map[ghostShadow.y][ghostShadow.x+1] !== 13){
-				map[ghostShadow.y][ghostShadow.x] = 2;
-				ghostShadow.x = ghostShadow.x + 1;
-				map[ghostShadow.y][ghostShadow.x] = 9;
-			}
-		}
-		else if (ghostMovement == 4){
-			if(map[ghostShadow.y+1][ghostShadow.x] !== 1 && map[ghostShadow.y+1][ghostShadow.x] !== 10 && map[ghostShadow.y+1][ghostShadow.x] !== 11 && map[ghostShadow.y+1][ghostShadow.x] !== 12 && map[ghostShadow.y+1][ghostShadow.x] !== 13){
-				map[ghostShadow.y][ghostShadow.x] = 2;
-				ghostShadow.y = ghostShadow.y + 1;
-				map[ghostShadow.y][ghostShadow.x] = 9;
-			}
-		}
 		if (map[pacman.y][pacman.x+1] !== 1){
 			map[pacman.y][pacman.x] = 3;
 			pacman.x = pacman.x + 1;
@@ -316,36 +345,6 @@ document.onkeydown = function(event){
 
 	// PACMAN MOVE DOWN
 	else if (event.keyCode === 40 || event.keyCode === 83){
-		var ghostMovement = Math.floor((Math.random() * 4) + 1);
-
-		if (ghostMovement == 1){
-			if(map[ghostShadow.y][ghostShadow.x-1] !== 1 && map[ghostShadow.y][ghostShadow.x-1] !== 10 && map[ghostShadow.y][ghostShadow.x-1] !== 11 && map[ghostShadow.y][ghostShadow.x-1] !== 12 && map[ghostShadow.y][ghostShadow.x-1] !== 13){
-				map[ghostShadow.y][ghostShadow.x] = 2;
-				ghostShadow.x = ghostShadow.x - 1;
-				map[ghostShadow.y][ghostShadow.x] = 9;
-			}
-		}
-		else if (ghostMovement == 2){
-			if(map[ghostShadow.y-1][ghostShadow.x] !== 1 && map[ghostShadow.y-1][ghostShadow.x] !== 10 && map[ghostShadow.y-1][ghostShadow.x] !== 11 && map[ghostShadow.y-1][ghostShadow.x] !== 12 && map[ghostShadow.y-1][ghostShadow.x] !== 13){
-				map[ghostShadow.y][ghostShadow.x] = 2;
-				ghostShadow.y = ghostShadow.y - 1;
-				map[ghostShadow.y][ghostShadow.x] = 9;
-			}
-		}
-		else if (ghostMovement == 3){
-			if(map[ghostShadow.y][ghostShadow.x+1] !== 1 && map[ghostShadow.y][ghostShadow.x+1] !== 10 && map[ghostShadow.y][ghostShadow.x+1] !== 11 && map[ghostShadow.y][ghostShadow.x+1] !== 12 && map[ghostShadow.y][ghostShadow.x+1] !== 13){
-				map[ghostShadow.y][ghostShadow.x] = 2;
-				ghostShadow.x = ghostShadow.x + 1;
-				map[ghostShadow.y][ghostShadow.x] = 9;
-			}
-		}
-		else if (ghostMovement == 4){
-			if(map[ghostShadow.y+1][ghostShadow.x] !== 1 && map[ghostShadow.y+1][ghostShadow.x] !== 10 && map[ghostShadow.y+1][ghostShadow.x] !== 11 && map[ghostShadow.y+1][ghostShadow.x] !== 12 && map[ghostShadow.y+1][ghostShadow.x] !== 13){
-				map[ghostShadow.y][ghostShadow.x] = 2;
-				ghostShadow.y = ghostShadow.y + 1;
-				map[ghostShadow.y][ghostShadow.x] = 9;
-			}
-		}
 		if (map[pacman.y+1][pacman.x] !== 1){
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y + 1;
