@@ -3,7 +3,7 @@
 // 3 = <div class='ground'></div>
 // 4 = <div class='powerPill'></div>
 // 5 = <div class='vulnerableGhost'></div>
-// 6 = <div class='pacman'></div>
+// 6 = <div class='player2'></div>
 // 7 = <div class='leftTeleport'></div>
 // 8 = <div class='rightTeleport'></div>
 // 9 = <div class='ghostShadow'></div>
@@ -11,14 +11,13 @@
 // 11 = <div class='ghostBashful'></div>
 // 12 = <div class='ghostPokey'></div>
 
-
 pacman = {
 	x: 11,
 	y: 13,
 }
 ghostShadow = {
-	x: 11,
-	y: 13,
+	x: 12,
+	y: 6,
 }
 ghostSpeedy = {
 	x: 10,
@@ -59,6 +58,13 @@ var level = document.getElementById('game'),
 		numberOfCoins = 0,
 		collectedCoins = 0,
 		score = 0;
+    highscore = 0;
+
+localStorage.setItem("highscore",0);
+if (score > parseInt(localStorage.getItem("highscore"))) {
+  localStorage.setItem("highscore", score);
+}
+document.getElementById('highscore').innerHTML = highscore;
 
 function drawWorld(){
 	level.innerHTML = '';
@@ -102,7 +108,6 @@ function drawWorld(){
 			else if (map[y][x] === 12) {
 				level.innerHTML += "<div class='ghostPokey'></div>";
 			}
-			console.log(numberOfCoins);
 			numberOfCoins - numberOfCoins
 		}
 		level.innerHTML += "<br>";
@@ -114,25 +119,56 @@ if (collectedCoins == numberOfCoins){
 	var nextWeb = "winner.html";
 	window.location.assign(nextWeb);
 }
+var ghostMovement = Math.floor((Math.random() * 4) + 1);
 
- // pacmanMovesLeft
+//1 = left
+//2 = up
+//3 = right
+//4 = down
+if (ghostMovement = 1){
+			if (map[pacman.y][pacman.x-1] !== 1){
+	map[ghostShadow.y][ghostShadow.x] = 2;
+	ghostShadow.x = ghostShadow.x - 1;
+	map[ghostShadow.y][ghostShadow.x] = 9;
+}
+	drawWorld();
+}
+else if (ghostMovement = 2){
+	map[ghostShadow.y][ghostShadow.x] = 2;
+	ghostShadow.x = ghostShadow.x - 1;
+	map[ghostShadow.y][ghostShadow.x] = 9;
+
+}
+else if (ghostMovement = 3){
+	map[ghostShadow.y][ghostShadow.x] = 2;
+	ghostShadow.x = ghostShadow.x - 1;
+	map[ghostShadow.y][ghostShadow.x] = 9;
+
+}
+else if (ghostMovement = 4){
+	map[ghostShadow.y][ghostShadow.x] = 2;
+	ghostShadow.x = ghostShadow.x - 1;
+	map[ghostShadow.y][ghostShadow.x] = 9;
+
+}
 document.onkeydown = function(event){
-	if (event.keyCode === 37 || event.keyCode === 65){
+	if (event.keyCode === 37 || event.keyCode === 65){ // PACMAN MOVE LEFT
 		if (map[pacman.y][pacman.x-1] !== 1){
 			map[pacman.y][pacman.x] = 3;
 			pacman.x = pacman.x - 1;
 			map[pacman.y][pacman.x] = 6;
 			if (map[pacman.y][pacman.x-1] == 2){
 				collectedCoins++
-				console.log(collectedCoins);
 				score = score + 10;
 				document.getElementById('score').innerHTML = score;
 			}
 			else if (map[pacman.y][pacman.x-1] == 4){
 				collectedCoins++
-				console.log(collectedCoins);
 				score = score + 50;
 				document.getElementById('score').innerHTML = score;
+			}
+			else if (map[pacman.y][pacman.x-1] == 9 || map[pacman.y][pacman.x-1] == 10 || map[pacman.y][pacman.x-1] == 11 || map[pacman.y][pacman.x-1] == 12){
+				gameOver();
 			}
 			else if(map[pacman.y][pacman.x-1] == 7){
 				pacman = {
@@ -140,16 +176,38 @@ document.onkeydown = function(event){
 					y: 8
 				}
 			}
-			for(var i = 9; i <=  12; i++){
-			if(map[pacman.y][pacman.x-1] == [i]){
+
+			if (map[ghostShadow.y][ghostShadow.x-1] !== 1){
+				var ghostMovement = Math.floor((Math.random() * 4) + 1);
+
+			if (ghostMovement = 1){
+				map[ghostShadow.y][ghostShadow.x] = 2;
+				ghostShadow.x = ghostShadow.x - 1;
+				map[ghostShadow.y][ghostShadow.x] = 9;
+			}
+			else if (ghostMovement = 2){
+				map[ghostShadow.y][ghostShadow.x] = 2;
+				ghostShadow.y = ghostShadow.y - 1;
+				map[ghostShadow.y][ghostShadow.x] = 9;
 
 			}
-		}
+			else if (ghostMovement = 3){
+				map[ghostShadow.y][ghostShadow.x] = 2;
+				ghostShadow.x = ghostShadow.x + 1;
+				map[ghostShadow.y][ghostShadow.x] = 9;
+
+			}
+			else if (ghostMovement = 4){
+				map[ghostShadow.y][ghostShadow.x] = 2;
+				ghostShadow.y = ghostShadow.y - 1;
+				map[ghostShadow.y][ghostShadow.x] = 9;
+
+			}
+			}
 			drawWorld();
 		}
 	}
-	// pacmanMovesUp
-	else if (event.keyCode === 38 || event.keyCode === 87){
+	else if (event.keyCode === 38 || event.keyCode === 87){ // PACMAN MOVE UP
 		if (map[pacman.y-1][pacman.x] !== 1){
 			//setInterval(function() {
 				map[pacman.y][pacman.x] = 3;
@@ -159,36 +217,34 @@ document.onkeydown = function(event){
 
 			if (map[pacman.y-1][pacman.x] == 2){
 				collectedCoins++
-				console.log(collectedCoins);
 				score = score + 10;
 				document.getElementById('score').innerHTML = score;
 			}
 			else if (map[pacman.y-1][pacman.x] == 4){
 				collectedCoins++
-				console.log(collectedCoins);
 				score = score + 50;
 				document.getElementById('score').innerHTML = score;
 			}
 			else if(map[pacman.y-1][pacman.x] == 4){
 			}
+			else if (map[pacman.y-1][pacman.x] == 9 || map[pacman.y-1][pacman.x] == 10 || map[pacman.y-1][pacman.x] == 11 || map[pacman.y-1][pacman.x] == 12){
+				gameOver();
+			}
 			drawWorld();
 		}
 	}
-	//pacmanMovesRight
-	else if (event.keyCode === 39 || event.keyCode === 68){
+	else if (event.keyCode === 39 || event.keyCode === 68){ // PACMAN MOVE RIGHT
 		if (map[pacman.y][pacman.x+1] !== 1){
 			map[pacman.y][pacman.x] = 3;
 			pacman.x = pacman.x + 1;
 			map[pacman.y][pacman.x] = 6;
 			if (map[pacman.y][pacman.x+1] == 2){
 				collectedCoins++
-				console.log(collectedCoins);
 				score = score + 10;
 				document.getElementById('score').innerHTML = score;
 			}
 			else if (map[pacman.y][pacman.x+1] == 4){
 				collectedCoins++
-				console.log(collectedCoins);
 				score = score + 50;
 				document.getElementById('score').innerHTML = score;
 			}
@@ -200,32 +256,39 @@ document.onkeydown = function(event){
 			}
 			else if(map[pacman.y][pacman.x+1] == 4){
 			}
+			else if (map[pacman.y][pacman.x+1] == 9 || map[pacman.y][pacman.x+1] == 10 || map[pacman.y][pacman.x+1] == 11 || map[pacman.y][pacman.x+1] == 12){
+				gameOver();
+			}
 			drawWorld();
 		}
 	}
-	//pacmanMovesDown
-	else if (event.keyCode === 40 || event.keyCode === 83){
+	else if (event.keyCode === 40 || event.keyCode === 83){ // PACMAN MOVE DOWN
 		if (map[pacman.y+1][pacman.x] !== 1){
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y + 1;
 			map[pacman.y][pacman.x] = 6;
 			if (map[pacman.y+1][pacman.x] == 2){
 				collectedCoins++
-				console.log(collectedCoins);
 				score = score + 10;
 				document.getElementById('score').innerHTML = score;
 			}
 			else if (map[pacman.y+1][pacman.x] == 4){
 				collectedCoins++
-				console.log(collectedCoins);
 				score = score + 50;
 				document.getElementById('score').innerHTML = score;
 			}
 			else if(map[pacman.y+1][pacman.x] == 4){
 			}
+			else if (map[pacman.y+1][pacman.x] == 9 || map[pacman.y+1][pacman.x] == 10 || map[pacman.y+1][pacman.x] == 11 || map[pacman.y+1][pacman.x] == 12){
+				gameOver();
+			}
 			drawWorld();
 		}
 	}
+}
+
+function gameOver(){
+	window.location.href = "gameover.html";
 }
 
 /*
