@@ -108,10 +108,14 @@ function drawWorld(){
 }
 
 drawWorld();
-if (collectedCoins == numberOfCoins){
-	var nextWeb = "winner.html";
-	window.location.assign(nextWeb);
+
+function winner() {
+	window.location.href = "endscreens/winner.html";
 }
+function gameOver(){
+	window.location.href = "endscreens/gameover.html";
+}
+
 
 
 

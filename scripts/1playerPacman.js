@@ -32,7 +32,6 @@ ghostPokey = {
 	y: 8,
 }
 
-
 map = [
 	[3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3],
 	[3,3,3,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,3,3,3],
@@ -41,8 +40,8 @@ map = [
 	[3,3,3,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,3,3,3],
 	[3,3,3,1,2,1,1,2,1,2,1,1,1,2,1,2,1,1,2,1,3,3,3],
 	[3,3,3,1,2,2,2,2,3,3,3,9,3,3,3,2,2,2,2,1,3,3,3],
-	[3,3,3,1,1,1,2,1,3,1,1,3,1,1,3,1,2,1,1,1,3,3,3],
-	[7,7,7,3,3,3,2,1,3,1,11,10,12,1,3,1,2,3,3,3,8,8,8],
+	[3,3,3,1,1,1,2,1,3,1,1,13,1,1,3,1,2,1,1,1,3,3,3],
+	[7,7,7,7,3,3,2,1,3,1,11,10,12,1,3,1,2,3,3,8,8,8,8],
 	[3,3,3,1,1,1,2,1,3,1,1,1,1,1,3,1,2,1,1,1,3,3,3],
 	[3,3,3,1,2,2,2,2,3,3,3,3,3,3,3,2,2,2,2,1,3,3,3],
 	[3,3,3,1,2,1,1,1,1,2,1,1,1,2,1,1,1,1,2,1,3,3,3],
@@ -54,19 +53,20 @@ map = [
 	[3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3]
 ]
 var level = document.getElementById('game'),
-		lives = 3,
-		numberOfCoins = 0,
-		collectedCoins = 0,
-		score = 0;
-    highscore = 0;
+	lives = 3,
+	score = 0,
+	highscore = 0;
 
 localStorage.setItem("highscore",0);
 if (score > parseInt(localStorage.getItem("highscore"))) {
-  localStorage.setItem("highscore", score);
+	localStorage.setItem("highscore", score);
 }
 document.getElementById('highscore').innerHTML = highscore;
 
 function drawWorld(){
+	if (score >= 1000){
+		winner();
+	}
 	level.innerHTML = '';
 	for(var y = 0; y < map.length ; y++) {
 		for(var x = 0; x < map[y].length ; x++) {
@@ -75,14 +75,12 @@ function drawWorld(){
 			}
 			else if (map[y][x] === 2) {
 				level.innerHTML += "<div class='coin'></div>";
-				numberOfCoins++;
 			}
 			else if (map[y][x] === 3) {
 				level.innerHTML += "<div class='ground'></div>";
 			}
 			else if (map[y][x] === 4) {
 				level.innerHTML += "<div class='powerPill'></div>";
-				numberOfCoins++;
 			}
 			else if (map[y][x] === 5) {
 				level.innerHTML += "<div class='vulnerableGhost'></div>";
@@ -108,62 +106,72 @@ function drawWorld(){
 			else if (map[y][x] === 12) {
 				level.innerHTML += "<div class='ghostPokey'></div>";
 			}
-			numberOfCoins - numberOfCoins
+			else if (map[y][x] === 13) {
+				level.innerHTML += "<div class='ghostWall'></div>";
+			}
 		}
 		level.innerHTML += "<br>";
 	}
 }
 
 drawWorld();
-if (collectedCoins == numberOfCoins){
-	var nextWeb = "winner.html";
-	window.location.assign(nextWeb);
+
+function winner() {
+	window.location.href = "endscreens/1playerWinner.html";
 }
-var ghostMovement = Math.floor((Math.random() * 4) + 1);
+function gameOver(){
+	window.location.href = "endscreens/1playerGameOver.html";
+}
 
 //1 = left
 //2 = up
 //3 = right
 //4 = down
-if (ghostMovement = 1){
-			if (map[pacman.y][pacman.x-1] !== 1){
-	map[ghostShadow.y][ghostShadow.x] = 2;
-	ghostShadow.x = ghostShadow.x - 1;
-	map[ghostShadow.y][ghostShadow.x] = 9;
-}
-	drawWorld();
-}
-else if (ghostMovement = 2){
-	map[ghostShadow.y][ghostShadow.x] = 2;
-	ghostShadow.x = ghostShadow.x - 1;
-	map[ghostShadow.y][ghostShadow.x] = 9;
 
-}
-else if (ghostMovement = 3){
-	map[ghostShadow.y][ghostShadow.x] = 2;
-	ghostShadow.x = ghostShadow.x - 1;
-	map[ghostShadow.y][ghostShadow.x] = 9;
 
-}
-else if (ghostMovement = 4){
-	map[ghostShadow.y][ghostShadow.x] = 2;
-	ghostShadow.x = ghostShadow.x - 1;
-	map[ghostShadow.y][ghostShadow.x] = 9;
-
-}
 document.onkeydown = function(event){
-	if (event.keyCode === 37 || event.keyCode === 65){ // PACMAN MOVE LEFT
+	// PACMAN MOVE LEFT
+	if (event.keyCode === 37 || event.keyCode === 65){
+			var ghostMovement = Math.floor((Math.random() * 4) + 1);
+
+			if (ghostMovement == 1){
+				if(map[ghostShadow.y][ghostShadow.x-1] !== 1 && map[ghostShadow.y][ghostShadow.x-1] !== 10 && map[ghostShadow.y][ghostShadow.x-1] !== 11 && map[ghostShadow.y][ghostShadow.x-1] !== 12 && map[ghostShadow.y][ghostShadow.x-1] !== 13){
+					map[ghostShadow.y][ghostShadow.x] = 2;
+					ghostShadow.x = ghostShadow.x - 1;
+					map[ghostShadow.y][ghostShadow.x] = 9;
+				}
+			}
+			else if (ghostMovement == 2){
+				if(map[ghostShadow.y-1][ghostShadow.x] !== 1 && map[ghostShadow.y-1][ghostShadow.x] !== 10 && map[ghostShadow.y-1][ghostShadow.x] !== 11 && map[ghostShadow.y-1][ghostShadow.x] !== 12 && map[ghostShadow.y-1][ghostShadow.x] !== 13){
+					map[ghostShadow.y][ghostShadow.x] = 2;
+					ghostShadow.y = ghostShadow.y - 1;
+					map[ghostShadow.y][ghostShadow.x] = 9;
+				}
+			}
+			else if (ghostMovement == 3){
+				if(map[ghostShadow.y][ghostShadow.x+1] !== 1 && map[ghostShadow.y][ghostShadow.x+1] !== 10 && map[ghostShadow.y][ghostShadow.x+1] !== 11 && map[ghostShadow.y][ghostShadow.x+1] !== 12 && map[ghostShadow.y][ghostShadow.x+1] !== 13){
+					map[ghostShadow.y][ghostShadow.x] = 2;
+					ghostShadow.x = ghostShadow.x + 1;
+					map[ghostShadow.y][ghostShadow.x] = 9;
+				}
+			}
+			else if (ghostMovement == 4){
+				if(map[ghostShadow.y+1][ghostShadow.x] !== 1 && map[ghostShadow.y+1][ghostShadow.x] !== 10 && map[ghostShadow.y+1][ghostShadow.x] !== 11 && map[ghostShadow.y+1][ghostShadow.x] !== 12 && map[ghostShadow.y+1][ghostShadow.x] !== 13){
+					map[ghostShadow.y][ghostShadow.x] = 2;
+					ghostShadow.y = ghostShadow.y + 1;
+					map[ghostShadow.y][ghostShadow.x] = 9;
+				}
+			}
+
 		if (map[pacman.y][pacman.x-1] !== 1){
 			map[pacman.y][pacman.x] = 3;
 			pacman.x = pacman.x - 1;
 			map[pacman.y][pacman.x] = 6;
 			if (map[pacman.y][pacman.x-1] == 2){
-				collectedCoins++
 				score = score + 10;
 				document.getElementById('score').innerHTML = score;
 			}
 			else if (map[pacman.y][pacman.x-1] == 4){
-				collectedCoins++
 				score = score + 50;
 				document.getElementById('score').innerHTML = score;
 			}
@@ -171,57 +179,62 @@ document.onkeydown = function(event){
 				gameOver();
 			}
 			else if(map[pacman.y][pacman.x-1] == 7){
+				map[pacman.y][pacman.x] = 3;
 				pacman = {
 					x: 19,
 					y: 8
 				}
 			}
+			drawWorld();
+		}
+	}
 
-			if (map[ghostShadow.y][ghostShadow.x-1] !== 1){
-				var ghostMovement = Math.floor((Math.random() * 4) + 1);
 
-			if (ghostMovement = 1){
+
+
+	// PACMAN MOVE UP
+	else if (event.keyCode === 38 || event.keyCode === 87){
+		var ghostMovement = Math.floor((Math.random() * 4) + 1);
+
+		if (ghostMovement == 1){
+			if(map[ghostShadow.y][ghostShadow.x-1] !== 1 && map[ghostShadow.y][ghostShadow.x-1] !== 10 && map[ghostShadow.y][ghostShadow.x-1] !== 11 && map[ghostShadow.y][ghostShadow.x-1] !== 12 && map[ghostShadow.y][ghostShadow.x-1] !== 13){
 				map[ghostShadow.y][ghostShadow.x] = 2;
 				ghostShadow.x = ghostShadow.x - 1;
 				map[ghostShadow.y][ghostShadow.x] = 9;
 			}
-			else if (ghostMovement = 2){
+		}
+		else if (ghostMovement == 2){
+			if(map[ghostShadow.y-1][ghostShadow.x] !== 1 && map[ghostShadow.y-1][ghostShadow.x] !== 10 && map[ghostShadow.y-1][ghostShadow.x] !== 11 && map[ghostShadow.y-1][ghostShadow.x] !== 12 && map[ghostShadow.y-1][ghostShadow.x] !== 13){
 				map[ghostShadow.y][ghostShadow.x] = 2;
 				ghostShadow.y = ghostShadow.y - 1;
 				map[ghostShadow.y][ghostShadow.x] = 9;
-
 			}
-			else if (ghostMovement = 3){
+		}
+		else if (ghostMovement == 3){
+			if(map[ghostShadow.y][ghostShadow.x+1] !== 1 && map[ghostShadow.y][ghostShadow.x+1] !== 10 && map[ghostShadow.y][ghostShadow.x+1] !== 11 && map[ghostShadow.y][ghostShadow.x+1] !== 12 && map[ghostShadow.y][ghostShadow.x+1] !== 13){
 				map[ghostShadow.y][ghostShadow.x] = 2;
 				ghostShadow.x = ghostShadow.x + 1;
 				map[ghostShadow.y][ghostShadow.x] = 9;
-
 			}
-			else if (ghostMovement = 4){
-				map[ghostShadow.y][ghostShadow.x] = 2;
-				ghostShadow.y = ghostShadow.y - 1;
-				map[ghostShadow.y][ghostShadow.x] = 9;
-
-			}
-			}
-			drawWorld();
 		}
-	}
-	else if (event.keyCode === 38 || event.keyCode === 87){ // PACMAN MOVE UP
+		else if (ghostMovement == 4){
+			if(map[ghostShadow.y+1][ghostShadow.x] !== 1 && map[ghostShadow.y+1][ghostShadow.x] !== 10 && map[ghostShadow.y+1][ghostShadow.x] !== 11 && map[ghostShadow.y+1][ghostShadow.x] !== 12 && map[ghostShadow.y+1][ghostShadow.x] !== 13){
+				map[ghostShadow.y][ghostShadow.x] = 2;
+				ghostShadow.y = ghostShadow.y + 1;
+				map[ghostShadow.y][ghostShadow.x] = 9;
+			}
+		}
+
 		if (map[pacman.y-1][pacman.x] !== 1){
-			//setInterval(function() {
-				map[pacman.y][pacman.x] = 3;
-				pacman.y = pacman.y - 1;
-				map[pacman.y][pacman.x] = 6;
-			//}, 1000);
+			map[pacman.y][pacman.x] = 3;
+			pacman.y = pacman.y - 1;
+			map[pacman.y][pacman.x] = 6;
 
 			if (map[pacman.y-1][pacman.x] == 2){
-				collectedCoins++
 				score = score + 10;
 				document.getElementById('score').innerHTML = score;
 			}
 			else if (map[pacman.y-1][pacman.x] == 4){
-				collectedCoins++
 				score = score + 50;
 				document.getElementById('score').innerHTML = score;
 			}
@@ -233,22 +246,57 @@ document.onkeydown = function(event){
 			drawWorld();
 		}
 	}
-	else if (event.keyCode === 39 || event.keyCode === 68){ // PACMAN MOVE RIGHT
+
+
+
+
+
+	// PACMAN MOVE RIGHT
+	else if (event.keyCode === 39 || event.keyCode === 68){
+		var ghostMovement = Math.floor((Math.random() * 4) + 1);
+
+		if (ghostMovement == 1){
+			if(map[ghostShadow.y][ghostShadow.x-1] !== 1 && map[ghostShadow.y][ghostShadow.x-1] !== 10 && map[ghostShadow.y][ghostShadow.x-1] !== 11 && map[ghostShadow.y][ghostShadow.x-1] !== 12 && map[ghostShadow.y][ghostShadow.x-1] !== 13){
+				map[ghostShadow.y][ghostShadow.x] = 2;
+				ghostShadow.x = ghostShadow.x - 1;
+				map[ghostShadow.y][ghostShadow.x] = 9;
+			}
+		}
+		else if (ghostMovement == 2){
+			if(map[ghostShadow.y-1][ghostShadow.x] !== 1 && map[ghostShadow.y-1][ghostShadow.x] !== 10 && map[ghostShadow.y-1][ghostShadow.x] !== 11 && map[ghostShadow.y-1][ghostShadow.x] !== 12 && map[ghostShadow.y-1][ghostShadow.x] !== 13){
+				map[ghostShadow.y][ghostShadow.x] = 2;
+				ghostShadow.y = ghostShadow.y - 1;
+				map[ghostShadow.y][ghostShadow.x] = 9;
+			}
+		}
+		else if (ghostMovement == 3){
+			if(map[ghostShadow.y][ghostShadow.x+1] !== 1 && map[ghostShadow.y][ghostShadow.x+1] !== 10 && map[ghostShadow.y][ghostShadow.x+1] !== 11 && map[ghostShadow.y][ghostShadow.x+1] !== 12 && map[ghostShadow.y][ghostShadow.x+1] !== 13){
+				map[ghostShadow.y][ghostShadow.x] = 2;
+				ghostShadow.x = ghostShadow.x + 1;
+				map[ghostShadow.y][ghostShadow.x] = 9;
+			}
+		}
+		else if (ghostMovement == 4){
+			if(map[ghostShadow.y+1][ghostShadow.x] !== 1 && map[ghostShadow.y+1][ghostShadow.x] !== 10 && map[ghostShadow.y+1][ghostShadow.x] !== 11 && map[ghostShadow.y+1][ghostShadow.x] !== 12 && map[ghostShadow.y+1][ghostShadow.x] !== 13){
+				map[ghostShadow.y][ghostShadow.x] = 2;
+				ghostShadow.y = ghostShadow.y + 1;
+				map[ghostShadow.y][ghostShadow.x] = 9;
+			}
+		}
 		if (map[pacman.y][pacman.x+1] !== 1){
 			map[pacman.y][pacman.x] = 3;
 			pacman.x = pacman.x + 1;
 			map[pacman.y][pacman.x] = 6;
 			if (map[pacman.y][pacman.x+1] == 2){
-				collectedCoins++
 				score = score + 10;
 				document.getElementById('score').innerHTML = score;
 			}
 			else if (map[pacman.y][pacman.x+1] == 4){
-				collectedCoins++
 				score = score + 50;
 				document.getElementById('score').innerHTML = score;
 			}
 			else if(map[pacman.y][pacman.x+1] == 8){
+				map[pacman.y][pacman.x] = 3;
 				pacman = {
 					x: 3,
 					y: 8
@@ -262,18 +310,51 @@ document.onkeydown = function(event){
 			drawWorld();
 		}
 	}
-	else if (event.keyCode === 40 || event.keyCode === 83){ // PACMAN MOVE DOWN
+
+
+
+
+	// PACMAN MOVE DOWN
+	else if (event.keyCode === 40 || event.keyCode === 83){
+		var ghostMovement = Math.floor((Math.random() * 4) + 1);
+
+		if (ghostMovement == 1){
+			if(map[ghostShadow.y][ghostShadow.x-1] !== 1 && map[ghostShadow.y][ghostShadow.x-1] !== 10 && map[ghostShadow.y][ghostShadow.x-1] !== 11 && map[ghostShadow.y][ghostShadow.x-1] !== 12 && map[ghostShadow.y][ghostShadow.x-1] !== 13){
+				map[ghostShadow.y][ghostShadow.x] = 2;
+				ghostShadow.x = ghostShadow.x - 1;
+				map[ghostShadow.y][ghostShadow.x] = 9;
+			}
+		}
+		else if (ghostMovement == 2){
+			if(map[ghostShadow.y-1][ghostShadow.x] !== 1 && map[ghostShadow.y-1][ghostShadow.x] !== 10 && map[ghostShadow.y-1][ghostShadow.x] !== 11 && map[ghostShadow.y-1][ghostShadow.x] !== 12 && map[ghostShadow.y-1][ghostShadow.x] !== 13){
+				map[ghostShadow.y][ghostShadow.x] = 2;
+				ghostShadow.y = ghostShadow.y - 1;
+				map[ghostShadow.y][ghostShadow.x] = 9;
+			}
+		}
+		else if (ghostMovement == 3){
+			if(map[ghostShadow.y][ghostShadow.x+1] !== 1 && map[ghostShadow.y][ghostShadow.x+1] !== 10 && map[ghostShadow.y][ghostShadow.x+1] !== 11 && map[ghostShadow.y][ghostShadow.x+1] !== 12 && map[ghostShadow.y][ghostShadow.x+1] !== 13){
+				map[ghostShadow.y][ghostShadow.x] = 2;
+				ghostShadow.x = ghostShadow.x + 1;
+				map[ghostShadow.y][ghostShadow.x] = 9;
+			}
+		}
+		else if (ghostMovement == 4){
+			if(map[ghostShadow.y+1][ghostShadow.x] !== 1 && map[ghostShadow.y+1][ghostShadow.x] !== 10 && map[ghostShadow.y+1][ghostShadow.x] !== 11 && map[ghostShadow.y+1][ghostShadow.x] !== 12 && map[ghostShadow.y+1][ghostShadow.x] !== 13){
+				map[ghostShadow.y][ghostShadow.x] = 2;
+				ghostShadow.y = ghostShadow.y + 1;
+				map[ghostShadow.y][ghostShadow.x] = 9;
+			}
+		}
 		if (map[pacman.y+1][pacman.x] !== 1){
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y + 1;
 			map[pacman.y][pacman.x] = 6;
 			if (map[pacman.y+1][pacman.x] == 2){
-				collectedCoins++
 				score = score + 10;
 				document.getElementById('score').innerHTML = score;
 			}
 			else if (map[pacman.y+1][pacman.x] == 4){
-				collectedCoins++
 				score = score + 50;
 				document.getElementById('score').innerHTML = score;
 			}
@@ -286,21 +367,3 @@ document.onkeydown = function(event){
 		}
 	}
 }
-
-function gameOver(){
-	window.location.href = "gameover.html";
-}
-
-/*
-if (true){
-drawWorld();
-}
-
-function loop(){
-	requestAnimationFrame(loop)
-}
-
-requestAnimationFrame(loop){
-	drawWorld();
-}
-*/
