@@ -1,39 +1,27 @@
-<!--
-// I am committed to being a person of integrity.
-// This project is submitted as part of the assessment for Year 8 IST.
-// This is all my own work. I have referenced any work used from other
-// sources and have not plagiarised the work of others.
-// (signed) Sithum Dissanayake
--->
-<!DOCTYPE html>
+,<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>PacMan</title>
-		<link rel="shortcut icon" type="image/png" href="images/favicon.ico"/>
-		<link rel="stylesheet" type="text/css" href="styles/style.css"/>
-		<link rel="stylesheet" type="text/css" href="styles/1playerPacman.css"/>
-	</head>
-	<body>
-		<table>
-			<tr>
-				<th>
-					1UP
-				</th>
-				<th>
-					HIGH SCORE
-				</th>
-				<th style="color:black">
-					 2up
-				</th>
-			</tr>
-			<tr>
-				<th id="score" style="text-align:right">00</th>
-				<th id="highscore">00</th>
-				<th></th>
-			</tr>
-		</table>
-		<div id="game"></div>
-
-	</body>
-	<script src="scripts/1playerPacman.js"></script>
+   <head>
+      <title>PacMan</title>
+      <link rel="shortcut icon" type="image/png" href="images/favicon.ico"/>
+      <link rel="stylesheet" type="text/css" href="styles/style.css"/>
+      <link rel="stylesheet" type="text/css" href="styles/1playerPacman.css"/>
+   </head>
+   <body>
+      <!--Sets up scoreboard and text above the game-->
+      <table>
+         <tr>
+            <th>1UP</th>
+            <th style="color:green"> GO!</th>
+            <th style="color:black">2up</th>
+         </tr>
+         <tr>
+            <th id="score" style="text-align:right">00</th>
+            <th></th>
+            <th></th>
+         </tr>
+      </table>
+      <!--Div where the game is going to be-->
+      <div id="game"></div>
+   </body>
+   <script src="scripts/1playerPacman.js"></script>
 </html>

@@ -11,6 +11,15 @@
       <button><a href="javascript:history.go(-1)">Try Again?</a></button>
       <button><a href="../index.html">Main Menu</a></button>
       </div>
-      <script src="../scripts/script.js"></script>
+      <script>
+			window.onload = function(){
+			  var theDelay = 1.5;
+			  var timer = setTimeout("showText()",theDelay*1000)
+			}
+			function showText(){
+			  document.getElementById("delayedText").style.visibility = "visible";
+			}
+
+			</script>
   </body>
 </html>
